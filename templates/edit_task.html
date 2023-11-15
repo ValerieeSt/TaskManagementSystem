@@ -1,0 +1,17 @@
+<!-- templates/edit_task.html -->
+{% extends 'layout.html' %}
+
+{% block title %}Редактирование задачи{% endblock %}
+
+{% block content %}
+    <h2>Редактирование задачи</h2>
+    <form method="POST" action="{{ url_for('edit_task', task_id=task.task_id) }}">
+        <label for="description">Описание задачи:</label>
+        <input type="text" id="description" name="description" value="{{ task.description }}" required>
+        <label for="deadline">Срок выполнения:</label>
+        <input type="date" id="deadline" name="deadline" value="{{ task.deadline }}" required>
+        <label for="status">Статус:</label>
+        <input type="text" id="status" name="status" value="{{ task.status_id }}" required>
+        <button type="submit">Сохранить изменения</button>
+    </form>
+{% endblock %}

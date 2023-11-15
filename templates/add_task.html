@@ -1,0 +1,26 @@
+<!-- templates/add_task.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management System</title>
+</head>
+<body>
+    <h1>Добавление новой задачи</h1>
+    <form method="POST" action="{{ url_for('add_task') }}">
+        <label for="description">Описание задачи:</label>
+        <input type="text" id="description" name="description" required>
+        <label for="deadline">Срок выполнения:</label>
+        <input type="date" id="deadline" name="deadline" required>
+        <label for="status">Статус:</label>
+        <select id="status" name="status" required>
+            {% for status in task_statuses %}
+                <option value="{{ status.status_id }}">{{ status.status_name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Добавить задачу</button>
+    </form>
+</body>
+</html>

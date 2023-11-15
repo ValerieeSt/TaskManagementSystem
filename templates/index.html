@@ -1,0 +1,18 @@
+<!-- templates/index.html -->
+{% extends 'layout.html' %}
+
+{% block title %}Список задач{% endblock %}
+
+{% block content %}
+   <h2>Список задач</h2>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <strong>{{ task.description }}</strong> - {{ task.deadline }}
+                {% if task.status %}
+                    <span class="status">{{ task.status.status_name }}</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
