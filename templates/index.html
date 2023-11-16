@@ -6,6 +6,18 @@
 {% block content %}
     <h2>Список задач</h2>
 
+    <!-- Добавим элементы управления для фильтрации по статусу -->
+    <div>
+        <label for="filter-status">Фильтр по статусу:</label>
+        <select id="filter-status" name="filter-status">
+            <option value="">Все задачи</option>
+            {% for status in task_statuses %}
+                <option value="{{ status.status_id }}">{{ status.status_name }}</option>
+            {% endfor %}
+        </select>
+        <button onclick="applyFilter()">Применить</button>
+    </div>
+
     <div>
         <label for="sort">Сортировка:</label>
         <select id="sort" name="sort" onchange="sortTasks()">
@@ -28,6 +40,41 @@
     </ul>
 
     <script>
+        function applyFilter() {
+            var filterStatus = document.getElementById('filter-status').value;
+
+            fetch(`/filter/${filterStatus}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Очищаем список
+                    var taskList = document.getElementById('task-list');
+                    taskList.innerHTML = '';
+
+                    // Добавляем отфильтрованные задачи
+                    data.tasks.forEach(function(task) {
+                        var li = document.createElement('li');
+                        li.setAttribute('data-deadline', task.deadline);
+                        li.setAttribute('data-status', task.status ? task.status.status_name : '');
+                        li.innerHTML = `<strong>${task.description}</strong> - ${task.deadline}`;
+                        if (task.status) {
+                            var span = document.createElement('span');
+                            span.setAttribute('class', 'status');
+                            span.innerHTML = task.status.status_name;
+                            li.appendChild(span);
+                        }
+                        var button = document.createElement('button');
+                        button.setAttribute('onclick', `deleteTask('${task.task_id}')`);
+                        button.innerHTML = 'Удалить';
+                        li.appendChild(button);
+
+                        taskList.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
         function sortTasks() {
             var sortBy = document.getElementById('sort').value;
             var taskList = document.getElementById('task-list');
@@ -60,21 +107,21 @@
             });
         }
 
-      function deleteTask(taskId) {
-    fetch(`/delete/${taskId}`, { method: 'DELETE' })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Ошибка удаления задачи: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Задача удалена успешно:', data);
-            window.location.reload();
-        })
-        .catch(error => {
-            console.error(error);
-        });
-}
+        function deleteTask(taskId) {
+            fetch(`/delete/${taskId}`, { method: 'DELETE' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Ошибка удаления задачи: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Задача удалена успешно:', data);
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
     </script>
 {% endblock %}
