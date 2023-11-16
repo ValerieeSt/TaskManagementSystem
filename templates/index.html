@@ -4,15 +4,77 @@
 {% block title %}Список задач{% endblock %}
 
 {% block content %}
-   <h2>Список задач</h2>
-    <ul>
+    <h2>Список задач</h2>
+
+    <div>
+        <label for="sort">Сортировка:</label>
+        <select id="sort" name="sort" onchange="sortTasks()">
+            <option value="deadline_asc">По сроку (возрастание)</option>
+            <option value="deadline_desc">По сроку (убывание)</option>
+            <option value="status">По статусу</option>
+        </select>
+    </div>
+
+    <ul id="task-list">
         {% for task in tasks %}
-            <li>
+            <li data-deadline="{{ task.deadline }}" data-status="{{ task.status.status_name }}">
                 <strong>{{ task.description }}</strong> - {{ task.deadline }}
                 {% if task.status %}
                     <span class="status">{{ task.status.status_name }}</span>
                 {% endif %}
+                <button onclick="deleteTask('{{ task.task_id }}')">Удалить</button>
             </li>
         {% endfor %}
     </ul>
+
+    <script>
+        function sortTasks() {
+            var sortBy = document.getElementById('sort').value;
+            var taskList = document.getElementById('task-list');
+            var tasks = Array.from(taskList.children);
+
+            tasks.sort(function(a, b) {
+                var aValue, bValue;
+
+                if (sortBy === 'deadline_asc' || sortBy === 'deadline_desc') {
+                    aValue = new Date(a.getAttribute('data-deadline'));
+                    bValue = new Date(b.getAttribute('data-deadline'));
+                } else if (sortBy === 'status') {
+                    aValue = a.getAttribute('data-status');
+                    bValue = b.getAttribute('data-status');
+                }
+
+                if (sortBy.includes('asc')) {
+                    return aValue > bValue ? 1 : -1;
+                } else {
+                    return aValue < bValue ? 1 : -1;
+                }
+            });
+
+            // Очищаем список
+            taskList.innerHTML = '';
+
+            // Добавляем отсортированные задачи
+            tasks.forEach(function(task) {
+                taskList.appendChild(task);
+            });
+        }
+
+      function deleteTask(taskId) {
+    fetch(`/delete/${taskId}`, { method: 'DELETE' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Ошибка удаления задачи: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Задача удалена успешно:', data);
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+    </script>
 {% endblock %}
