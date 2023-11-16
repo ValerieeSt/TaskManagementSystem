@@ -42,15 +42,13 @@
     <script>
         function applyFilter() {
             var filterStatus = document.getElementById('filter-status').value;
-
-            fetch(`/filter/${filterStatus}`)
+            var filterParam = filterStatus !== '' ? filterStatus : 'all';
+            fetch(`/filter/${filterParam}`)
                 .then(response => response.json())
                 .then(data => {
-                    // Очищаем список
                     var taskList = document.getElementById('task-list');
                     taskList.innerHTML = '';
 
-                    // Добавляем отфильтрованные задачи
                     data.tasks.forEach(function(task) {
                         var li = document.createElement('li');
                         li.setAttribute('data-deadline', task.deadline);
@@ -98,10 +96,8 @@
                 }
             });
 
-            // Очищаем список
             taskList.innerHTML = '';
 
-            // Добавляем отсортированные задачи
             tasks.forEach(function(task) {
                 taskList.appendChild(task);
             });

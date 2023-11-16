@@ -99,14 +99,14 @@ def delete_task(task_id):
     else:
         return jsonify({'message': 'Task not found'}), 404
 
+
 @app.route('/filter/<status_id>')
 def filter_tasks(status_id):
-    if status_id and status_id != 'all':
+    if status_id != 'all':
         tasks = Task.query.filter_by(status_id=status_id).all()
     else:
         tasks = Task.query.all()
 
-    # Преобразуем результат в формат JSON и отправляем клиенту
     return jsonify(tasks=[task.serialize() for task in tasks])
 
 
