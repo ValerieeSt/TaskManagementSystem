@@ -8,10 +8,20 @@
     <form method="POST" action="{{ url_for('edit_task', task_id=task.task_id) }}">
         <label for="description">Описание задачи:</label>
         <input type="text" id="description" name="description" value="{{ task.description }}" required>
+
         <label for="deadline">Срок выполнения:</label>
         <input type="date" id="deadline" name="deadline" value="{{ task.deadline }}" required>
+
         <label for="status">Статус:</label>
-        <input type="text" id="status" name="status" value="{{ task.status_id }}" required>
+        <select id="status" name="status" required>
+            {% for task_status in task_statuses %}
+                <option value="{{ task_status.status_id }}"
+                        {% if task_status.status_id == task.status_id %}selected{% endif %}>
+                    {{ task_status.status_name }}
+                </option>
+            {% endfor %}
+        </select>
+
         <button type="submit">Сохранить изменения</button>
     </form>
 {% endblock %}

@@ -73,16 +73,18 @@ def add_task():
 @app.route('/edit_task/<int:task_id>', methods=['GET', 'POST'])
 def edit_task(task_id):
     task = Task.query.get_or_404(task_id)
+    task_statuses = TaskStatus.query.all()
+
     if request.method == 'POST':
         task.description = request.form.get('description')
         task.deadline = request.form.get('deadline')
         task.status_id = request.form.get('status')
 
-        # Обновление задачи в базе данных
         db.session.commit()
 
         return redirect(url_for('index'))
-    return render_template('edit_task.html', task=task)
+
+    return render_template('edit_task.html', task=task, task_statuses=task_statuses)
 
 
 @app.route('/delete/<int:task_id>', methods=['DELETE'])
