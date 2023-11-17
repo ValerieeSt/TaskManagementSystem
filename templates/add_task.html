@@ -5,8 +5,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Management System</title>
+    <title>Добавить задачу</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
 </head>
+ <header>
+
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Задачи</a></li>
+                <li><a href="{{ url_for('profile') }}">Профиль</a></li>
+                <li><a href="{{ url_for('logout') }}">Выход</a></li>
+            </ul>
+
+            <div>
+                <span>{{ current_user.username }}</span>
+            </div>
+        </nav>
+    </header>
+<main>
 <body>
     <h1>Добавление новой задачи</h1>
     <form method="POST" action="{{ url_for('add_task') }}">
@@ -23,4 +42,5 @@
         <button type="submit">Добавить задачу</button>
     </form>
 </body>
+</main>
 </html>

@@ -1,0 +1,118 @@
+*,
+*::before,
+*::after{
+   padding: 0;
+   margin: 0;
+   border: 0;
+   box-sizing: border-box;
+}
+a{
+   text-decoration: none;
+}
+ul,
+ol,
+li{
+    list-style-type: none;
+}
+img{
+    vertical-align: top;
+}
+
+p {
+    text-indent: 20px; /* Отступ первой строки в пикселях */
+   }
+
+html,
+body{
+    height: 100%;
+    line-height: 1;
+    font-size: 16px;
+    color:#252b42;
+    font-weight: 500;
+    font-family: Montserrat;
+    background-color: #f4f4f4;
+}
+
+.container {
+  width: 100%; /* Ширина блока по ширине родительского элемента */
+  max-width: 960px; /* Максимальная ширина блока */
+  margin: 0 auto; /* Центрирование блока по горизонтали */
+  padding: 15px; /* Добавление отступов вокруг блока */
+}
+
+header {
+    background-color: #0F1326;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+}
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+main {
+    margin: 30px;
+}
+
+h1, h2, h3 {
+    color: #283C6C;
+    padding-bottom: 20;
+}
+
+form {
+    margin-bottom: 40px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #5976B5;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover {
+    background-color: #283C6C;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.status {
+    margin-left: 40px;
+    margin-right: 40px;
+    padding: 5px;
+    background-color: #28a745;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 3px;
+}

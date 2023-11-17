@@ -1,6 +1,16 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+
+</head>
 {% block content %}
  <header>
-        <h1><a href="{{ url_for('index') }}">Task Management System</a></h1>
 
         <nav>
             <ul>
@@ -9,15 +19,14 @@
                 <li><a href="{{ url_for('logout') }}">Выход</a></li>
             </ul>
 
-            <!-- Общая информация о пользователе -->
             <div>
                 <span>{{ current_user.username }}</span>
             </div>
         </nav>
     </header>
+    <main>
     <h2>Список задач</h2>
 
-    <!-- Добавим элементы управления для фильтрации по статусу -->
     <div>
         <label for="filter-status">Фильтр по статусу:</label>
         <select id="filter-status" name="filter-status">
@@ -50,7 +59,7 @@
             </li>
         {% endfor %}
     </ul>
-
+    </main>
     <script>
         function applyFilter() {
             var filterStatus = document.getElementById('filter-status').value;
@@ -133,3 +142,4 @@
         }
     </script>
 {% endblock %}
+</html>

@@ -5,10 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <title>Регистрация</title>
 </head>
+<div class="container">
 <body>
-    <h1>Register</h1>
+    <h1>Регистрация</h1>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul>
@@ -19,12 +23,13 @@
         {% endif %}
     {% endwith %}
     <form method="POST" action="{{ url_for('register') }}">
-        <label for="username">Username:</label>
+        <label for="username">Имя пользователя:</label>
         <input type="text" id="username" name="username" required>
-        <label for="password">Password:</label>
+        <label for="password">Пароль:</label>
         <input type="password" id="password" name="password" required>
-        <button type="submit">Register</button>
+        <button type="submit">Зарегистрироваться</button>
     </form>
-    <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a>.</p>
+    <p>Уже есть аккаунт? <a href="{{ url_for('login') }}">Войдите</a>.</p>
 </body>
+</div>
 </html>

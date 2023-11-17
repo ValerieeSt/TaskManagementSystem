@@ -1,8 +1,32 @@
 <!-- templates/edit_task.html -->
-{% extends 'layout.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить задачу</title>
 
-{% block title %}Редактирование задачи{% endblock %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
+</head>
+ <header>
+
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Задачи</a></li>
+                <li><a href="{{ url_for('profile') }}">Профиль</a></li>
+                <li><a href="{{ url_for('logout') }}">Выход</a></li>
+            </ul>
+
+            <div>
+                <span>{{ current_user.username }}</span>
+            </div>
+        </nav>
+    </header>
+
+<main>
 {% block content %}
     <h2>Редактирование задачи</h2>
     <form method="POST" action="{{ url_for('edit_task', task_id=task.task_id) }}">
@@ -24,4 +48,7 @@
 
         <button type="submit">Сохранить изменения</button>
     </form>
-{% endblock %}
+    {% endblock %}
+    </main>
+</html>
+
