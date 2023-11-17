@@ -35,6 +35,8 @@
                     <span class="status">{{ task.status.status_name }}</span>
                 {% endif %}
                 <button onclick="deleteTask('{{ task.task_id }}')">Удалить</button>
+                <!-- Добавим кнопку "Редактировать задачу" с ссылкой на соответствующий маршрут -->
+                <a href="{{ url_for('edit_task', task_id=task.task_id) }}">Редактировать задачу</a>
             </li>
         {% endfor %}
     </ul>

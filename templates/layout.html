@@ -14,7 +14,9 @@
         <nav>
             <ul>
                 <li><a href="{{ url_for('add_task') }}">Добавить задачу</a></li>
-                <li><a href="{{ url_for('edit_task', task_id=1) }}">Редактировать задачу</a></li>
+                {% if task is defined %}
+                  <li><a href="{{ url_for('edit_task', task_id=task.task_id) }}">Редактировать задачу</a></li>
+                {% endif %}
                 <li><a href="{{ url_for('logout') }}">Выход</a></li>
             </ul>
         </nav>

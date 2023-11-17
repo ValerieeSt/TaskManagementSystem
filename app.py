@@ -89,7 +89,12 @@ def add_task():
         description = request.form.get('description')
         deadline = request.form.get('deadline')
         status_id = request.form.get('status')
-        new_task = Task(description=description, deadline=deadline, status_id=status_id, user_id=current_user.user_id)
+        new_task = Task(
+            description=description,
+            deadline=deadline,
+            status_id=status_id,
+            user_id=current_user.user_id  # Установите user_id при создании задачи
+        )
         db.session.add(new_task)
         db.session.commit()
         return redirect(url_for('index'))
@@ -104,7 +109,15 @@ def edit_task(task_id):
     task = Task.query.get_or_404(task_id)
     task_statuses = TaskStatus.query.all()
 
+    print(f"Task owner ID: {task.user_id}, Current user ID: {current_user.user_id}")
+
+    # Добавим дополнительные проверки
+    if not task.user_id:
+        print("Permission denied: Task owner ID is None.")
+        abort(403)  # Запрет доступа, если task.user_id не установлен
+
     if task.user_id != current_user.user_id:
+        print("Permission denied: User is not the owner of the task.")
         abort(403)  # Запрет доступа, если пользователь не владелец задачи
 
     if request.method == 'POST':
@@ -191,6 +204,12 @@ def register():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html', user=current_user)
 
 if __name__ == '__main__':
     app.run(debug=True)
