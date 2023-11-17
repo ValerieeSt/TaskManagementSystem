@@ -93,7 +93,7 @@ def add_task():
             description=description,
             deadline=deadline,
             status_id=status_id,
-            user_id=current_user.user_id  # Установите user_id при создании задачи
+            user_id=current_user.user_id
         )
         db.session.add(new_task)
         db.session.commit()
@@ -118,7 +118,7 @@ def edit_task(task_id):
 
     if task.user_id != current_user.user_id:
         print("Permission denied: User is not the owner of the task.")
-        abort(403)  # Запрет доступа, если пользователь не владелец задачи
+        abort(403)
 
     if request.method == 'POST':
         task.description = request.form.get('description')
@@ -210,6 +210,47 @@ def page_not_found(e):
 @login_required
 def profile():
     return render_template('profile.html', user=current_user)
+
+@app.route('/update_profile', methods=['POST'])
+@login_required
+def update_profile():
+
+    new_username = request.form.get('username')
+    new_email = request.form.get('email')
+    new_avatar_url = request.form.get('avatar_url')
+
+
+    current_user.username = new_username
+    current_user.email = new_email
+    current_user.avatar_url = new_avatar_url
+
+    db.session.commit()
+
+    return redirect(url_for('profile'))
+
+@app.route('/update_username', methods=['POST'])
+@login_required
+def update_username():
+    new_username = request.form.get('username')
+
+    current_user.username = new_username
+    db.session.commit()
+
+    flash('Имя пользователя успешно обновлено', 'success')
+
+    return redirect(url_for('profile'))
+
+@app.route('/update_password', methods=['POST'])
+@login_required
+def update_password():
+    new_password = request.form.get('password')
+
+    current_user.set_password(new_password)
+    db.session.commit()
+
+    flash('Пароль успешно обновлен', 'success')
+
+    return redirect(url_for('profile'))
 
 if __name__ == '__main__':
     app.run(debug=True)

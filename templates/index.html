@@ -1,9 +1,20 @@
-<!-- templates/index.html -->
-{% extends 'layout.html' %}
-
-{% block title %}Список задач{% endblock %}
-
 {% block content %}
+ <header>
+        <h1><a href="{{ url_for('index') }}">Task Management System</a></h1>
+
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('add_task') }}">Добавить задачу</a></li>
+                <li><a href="{{ url_for('profile') }}">Профиль</a></li>
+                <li><a href="{{ url_for('logout') }}">Выход</a></li>
+            </ul>
+
+            <!-- Общая информация о пользователе -->
+            <div>
+                <span>{{ current_user.username }}</span>
+            </div>
+        </nav>
+    </header>
     <h2>Список задач</h2>
 
     <!-- Добавим элементы управления для фильтрации по статусу -->
@@ -35,7 +46,6 @@
                     <span class="status">{{ task.status.status_name }}</span>
                 {% endif %}
                 <button onclick="deleteTask('{{ task.task_id }}')">Удалить</button>
-                <!-- Добавим кнопку "Редактировать задачу" с ссылкой на соответствующий маршрут -->
                 <a href="{{ url_for('edit_task', task_id=task.task_id) }}">Редактировать задачу</a>
             </li>
         {% endfor %}
