@@ -111,7 +111,6 @@ def edit_task(task_id):
 
     print(f"Task owner ID: {task.user_id}, Current user ID: {current_user.user_id}")
 
-    # Добавим дополнительные проверки
     if not task.user_id:
         print("Permission denied: Task owner ID is None.")
         abort(403)  # Запрет доступа, если task.user_id не установлен
