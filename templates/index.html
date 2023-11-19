@@ -19,15 +19,18 @@
                 <li><a href="{{ url_for('logout') }}">Выход</a></li>
             </ul>
 
-            <div>
-                <span>{{ current_user.username }}</span>
+            <div class="username">
+                <span >{{ current_user.username }}</span>
             </div>
         </nav>
     </header>
+
     <main>
+    <div class="tasks-container">
+    <div class="control">
     <h2>Список задач</h2>
 
-    <div>
+    <div class="filter">
         <label for="filter-status">Фильтр по статусу:</label>
         <select id="filter-status" name="filter-status">
             <option value="">Все задачи</option>
@@ -38,7 +41,7 @@
         <button onclick="applyFilter()">Применить</button>
     </div>
 
-    <div>
+    <div class="sort">
         <label for="sort">Сортировка:</label>
         <select id="sort" name="sort" onchange="sortTasks()">
             <option value="deadline_asc">По сроку (возрастание)</option>
@@ -46,19 +49,26 @@
             <option value="status">По статусу</option>
         </select>
     </div>
-
-    <ul id="task-list">
-        {% for task in tasks %}
-            <li data-deadline="{{ task.deadline }}" data-status="{{ task.status.status_name }}">
-                <strong>{{ task.description }}</strong> - {{ task.deadline }}
-                {% if task.status %}
-                    <span class="status">{{ task.status.status_name }}</span>
-                {% endif %}
-                <button onclick="deleteTask('{{ task.task_id }}')">Удалить</button>
-                <a href="{{ url_for('edit_task', task_id=task.task_id) }}">Редактировать задачу</a>
-            </li>
-        {% endfor %}
-    </ul>
+    </div>
+    <div class="tasks">
+        <ul id="task-list">
+            {% for task in tasks %}
+                <li data-deadline="{{ task.deadline }}" data-status="{{ task.status.status_name }}">
+                    <div class="task-content">
+                        <strong>{{ task.description }}</strong> - {{ task.deadline }}
+                        {% if task.status %}
+                            <span class="status">{{ task.status.status_name }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="task-actions">
+                        <button onclick="deleteTask('{{ task.task_id }}')">Удалить</button>
+                        <a href="{{ url_for('edit_task', task_id=task.task_id) }}">Редактировать задачу</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    </div>
     </main>
     <script>
         function applyFilter() {

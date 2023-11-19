@@ -13,15 +13,6 @@
 <div class="container">
 <body>
     <h1>Регистрация</h1>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
     <form method="POST" action="{{ url_for('register') }}">
         <label for="username">Имя пользователя:</label>
         <input type="text" id="username" name="username" required>

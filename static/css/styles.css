@@ -18,9 +18,7 @@ img{
     vertical-align: top;
 }
 
-p {
-    text-indent: 20px; /* Отступ первой строки в пикселях */
-   }
+
 
 html,
 body{
@@ -34,10 +32,10 @@ body{
 }
 
 .container {
-  width: 100%; /* Ширина блока по ширине родительского элемента */
-  max-width: 960px; /* Максимальная ширина блока */
-  margin: 0 auto; /* Центрирование блока по горизонтали */
-  padding: 15px; /* Добавление отступов вокруг блока */
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 15px;
 }
 
 header {
@@ -60,13 +58,14 @@ nav ul li {
 }
 
 main {
-    margin: 30px;
+    margin: 50px;
 }
 
-h1, h2, h3 {
+h1, h2 {
     color: #283C6C;
-    padding-bottom: 20;
+    margin-bottom: 20px;
 }
+
 
 form {
     margin-bottom: 40px;
@@ -76,7 +75,17 @@ label {
     display: block;
     margin-bottom: 10px;
 }
+.control{
+    flex: 1;
+}
+.tasks {
+    padding: 20px 0;
+    flex: 4;
+}
 
+.tasks-container{
+    display:flex;
+}
 input {
     width: 100%;
     padding: 10px;
@@ -89,22 +98,41 @@ button {
     padding: 10px;
     cursor: pointer;
     border: none;
+    width: auto;
+     border-radius: 4px;
+     font-size: 14px;
+
 }
+
+
 
 button:hover {
     background-color: #283C6C;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+
+.tasks li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
+.task-content {
+    flex-grow: 1;
+}
+.task-actions {
+    margin-right: 80px;
+}
 li {
     background-color: #fff;
     border: 1px solid #ddd;
     padding: 10px;
     margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
 }
 
 .status {
@@ -115,4 +143,21 @@ li {
     color: #fff;
     font-weight: bold;
     border-radius: 3px;
+}
+
+.username{
+    padding: 20px 0 0;
+    font-weight: bold;
+    font-size: 18px;
+
+}
+select {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.sort {
+    padding: 20px 0 0 0;
 }
