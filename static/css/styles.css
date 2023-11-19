@@ -134,12 +134,25 @@ ul {
     list-style-type: none;
     padding: 0;
 }
+.status-Готово {
+    background-color: #6A9A2C;
+    }
+
+
+.status-В_процессе {
+    background-color: #D7722A;
+    }
+
+
+.status-К_выполнению {
+    background-color: #14224F;
+   }
 
 .status {
     margin-left: 40px;
     margin-right: 40px;
-    padding: 5px;
-    background-color: #28a745;
+    padding: 8px;
+
     color: #fff;
     font-weight: bold;
     border-radius: 3px;
@@ -161,3 +174,4 @@ select {
 .sort {
     padding: 20px 0 0 0;
 }
+

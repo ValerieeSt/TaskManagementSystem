@@ -2,7 +2,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профиль</title>
+    <title>Задачи</title>
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
@@ -54,16 +54,16 @@
         <ul id="task-list">
             {% for task in tasks %}
                 <li data-deadline="{{ task.deadline }}" data-status="{{ task.status.status_name }}">
-                    <div class="task-content">
-                        <strong>{{ task.description }}</strong> - {{ task.deadline }}
-                        {% if task.status %}
-                            <span class="status">{{ task.status.status_name }}</span>
-                        {% endif %}
-                    </div>
-                    <div class="task-actions">
-                        <button onclick="deleteTask('{{ task.task_id }}')">Удалить</button>
-                        <a href="{{ url_for('edit_task', task_id=task.task_id) }}">Редактировать задачу</a>
-                    </div>
+                <div class="task-content">
+                    <strong>{{ task.description }}</strong> - {{ task.deadline }}
+                    {% if task.status %}
+                        <span class="status status-{{ task.status.status_name|replace(' ', '_') }}">{{ task.status.status_name }}</span>
+                    {% endif %}
+                </div>
+                <div class="task-actions">
+                    <button onclick="deleteTask('{{ task.task_id }}')">Удалить</button>
+                    <a href="{{ url_for('edit_task', task_id=task.task_id) }}">Редактировать задачу</a>
+                </div>
                 </li>
             {% endfor %}
         </ul>
@@ -85,12 +85,13 @@
                         li.setAttribute('data-deadline', task.deadline);
                         li.setAttribute('data-status', task.status ? task.status.status_name : '');
                         li.innerHTML = `<strong>${task.description}</strong> - ${task.deadline}`;
-                        if (task.status) {
-                            var span = document.createElement('span');
-                            span.setAttribute('class', 'status');
-                            span.innerHTML = task.status.status_name;
-                            li.appendChild(span);
-                        }
+                      if (task.status) {
+                        var span = document.createElement('span');
+                        var statusClass = task.status.status_name.replace(' ', '_');
+                        span.setAttribute('class', 'status status-' + statusClass);
+                        span.innerHTML = task.status.status_name;
+                        li.appendChild(span);
+                    }
                         var button = document.createElement('button');
                         button.setAttribute('onclick', `deleteTask('${task.task_id}')`);
                         button.innerHTML = 'Удалить';
