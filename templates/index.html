@@ -50,61 +50,108 @@
         </select>
     </div>
     </div>
-    <div class="tasks">
-        <ul id="task-list">
-            {% for task in tasks %}
-                <li data-deadline="{{ task.deadline }}" data-status="{{ task.status.status_name }}">
+  <div class="tasks">
+    <ul id="task-list">
+        {% for task in tasks %}
+            <li data-deadline="{{ task.deadline }}" data-status="{{ task.status.status_name }}">
                 <div class="task-content">
-                    <strong>{{ task.description }}</strong> - {{ task.deadline }}
+                    <div class="task-description">{{ task.description }}</div>
+                    <div class="task-deadline">{{ task.deadline }}</div>
                     {% if task.status %}
-                        <span class="status status-{{ task.status.status_name|replace(' ', '_') }}">{{ task.status.status_name }}</span>
+                        <div class="task-status">
+                            <span class="status status-{{ task.status.status_name|replace(' ', '_') }}">{{ task.status.status_name }}</span>
+                        </div>
                     {% endif %}
+                    <div class="task-actions">
+                        <button onclick="deleteTask('{{ task.task_id }}')">Удалить</button>
+                        <a class="edit-button" href="{{ url_for('edit_task', task_id=task.task_id) }}">Редактировать</a>
+                    </div>
                 </div>
-                <div class="task-actions">
-                    <button onclick="deleteTask('{{ task.task_id }}')">Удалить</button>
-                    <a href="{{ url_for('edit_task', task_id=task.task_id) }}">Редактировать задачу</a>
-                </div>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
     </div>
     </main>
     <script>
         function applyFilter() {
-            var filterStatus = document.getElementById('filter-status').value;
-            var filterParam = filterStatus !== '' ? filterStatus : 'all';
-            fetch(`/filter/${filterParam}`)
-                .then(response => response.json())
-                .then(data => {
-                    var taskList = document.getElementById('task-list');
-                    taskList.innerHTML = '';
+    var filterStatus = document.getElementById('filter-status').value;
+    var filterParam = filterStatus !== '' ? filterStatus : 'all';
+    fetch(`/filter/${filterParam}`)
+        .then(response => response.json())
+        .then(data => {
+            var taskList = document.getElementById('task-list');
+            taskList.innerHTML = '';
 
-                    data.tasks.forEach(function(task) {
-                        var li = document.createElement('li');
-                        li.setAttribute('data-deadline', task.deadline);
-                        li.setAttribute('data-status', task.status ? task.status.status_name : '');
-                        li.innerHTML = `<strong>${task.description}</strong> - ${task.deadline}`;
-                      if (task.status) {
-                        var span = document.createElement('span');
-                        var statusClass = task.status.status_name.replace(' ', '_');
-                        span.setAttribute('class', 'status status-' + statusClass);
-                        span.innerHTML = task.status.status_name;
-                        li.appendChild(span);
-                    }
-                        var button = document.createElement('button');
-                        button.setAttribute('onclick', `deleteTask('${task.task_id}')`);
-                        button.innerHTML = 'Удалить';
-                        li.appendChild(button);
+            data.tasks.forEach(function(task) {
+                var li = document.createElement('li');
+                li.setAttribute('data-deadline', task.deadline);
+                li.setAttribute('data-status', task.status ? task.status.status_name : '');
 
-                        taskList.appendChild(li);
-                    });
-                })
-                .catch(error => {
-                    console.error(error);
+                var taskContent = document.createElement('div');
+                taskContent.className = 'task-content';
+
+                var taskDescription = document.createElement('div');
+                taskDescription.className = 'task-description';
+                taskDescription.innerHTML = `<strong>${task.description}</strong>`;
+
+                var taskDeadline = document.createElement('div');
+                taskDeadline.className = 'task-deadline';
+                taskDeadline.textContent = task.deadline;
+
+                var taskStatus = document.createElement('div');
+                taskStatus.className = 'task-status';
+                if (task.status) {
+                    var statusSpan = document.createElement('span');
+                    statusSpan.className = 'status status-' + task.status.status_name.replace(' ', '_');
+                    statusSpan.textContent = task.status.status_name;
+                    taskStatus.appendChild(statusSpan);
+                }
+
+                var taskActions = document.createElement('div');
+                taskActions.className = 'task-actions';
+
+                var deleteButton = document.createElement('button');
+                deleteButton.setAttribute('onclick', `deleteTask('${task.task_id}')`);
+                deleteButton.textContent = 'Удалить';
+                deleteButton.style.backgroundColor = '#980019';
+                    deleteButton.addEventListener('mouseover', function() {
+                    deleteButton.style.backgroundColor = '#7A0014';
                 });
-        }
+                     deleteButton.addEventListener('mouseout', function() {
+                     deleteButton.style.backgroundColor = '#980019';
+                });
 
+
+                var editLink = document.createElement('a');
+                editLink.href = `/edit_task/${task.task_id}`;
+                editLink.textContent = 'Редактировать';
+                editLink.className = 'edit-button';
+                editLink.style.backgroundColor = '#8e9B97';
+                editLink.style.marginLeft = '10px';
+                editLink.addEventListener('mouseover', function() {
+                editLink.style.backgroundColor = '#6d7d79';
+                });
+
+                    editLink.addEventListener('mouseout', function() {
+                    editLink.style.backgroundColor = '#8e9B97';
+                });
+                taskActions.appendChild(deleteButton);
+                taskActions.appendChild(editLink);
+
+                taskContent.appendChild(taskDescription);
+                taskContent.appendChild(taskDeadline);
+                taskContent.appendChild(taskStatus);
+                taskContent.appendChild(taskActions);
+
+                li.appendChild(taskContent);
+                taskList.appendChild(li);
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
         function sortTasks() {
             var sortBy = document.getElementById('sort').value;
             var taskList = document.getElementById('task-list');

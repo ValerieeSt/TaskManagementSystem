@@ -18,6 +18,10 @@ img{
     vertical-align: top;
 }
 
+h1, h2 {
+    color: #283C6C;
+    margin-bottom: 20px;
+}
 
 
 html,
@@ -35,37 +39,53 @@ body{
   width: 100%;
   max-width: 960px;
   margin: 0 auto;
-  padding: 80px 0;
+  padding: 40px 0;
 }
+
 
 header {
-    background-color: #0F1326;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
+    background-color: #0F1F38;
+    padding: 20px 50px;
+    box-shadow: 0 30px 20px rgba(0, 0, 0, 0.1);
 }
 
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+
 nav ul {
-    list-style-type: none;
-    padding: 0;
+    list-style: none;
     margin: 0;
+    padding: 0;
 }
+
 
 nav ul li {
     display: inline-block;
-    margin-right: 10px;
+    margin-right: 20px;
 }
+
+
+nav ul li a {
+    text-decoration: none;
+    color: #ecf0f1;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+
+nav ul li a:hover {
+    color: #5976B5;
+}
+
 
 main {
     margin: 50px;
 }
-
-h1, h2 {
-    color: #283C6C;
-    margin-bottom: 20px;
-}
-
 
 form {
     margin-bottom: 40px;
@@ -75,9 +95,11 @@ label {
     display: block;
     margin-bottom: 10px;
 }
+
 .control{
     flex: 1;
 }
+
 .tasks {
     padding: 20px 0;
     flex: 4;
@@ -86,12 +108,21 @@ label {
 .tasks-container{
     display:flex;
 }
+
+
 input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
+     margin-bottom: 10px;
+    border: none;
+    border-bottom: 2px solid #3498db;
+    outline: none;
+    font-size: 16px;
+    transition: border-bottom 0.3s ease;
 }
-
+input:focus {
+    border-bottom: 2px solid #0F1F38;
+}
 button {
     background-color: #5976B5;
     color: #fff;
@@ -104,70 +135,54 @@ button {
 
 }
 
-
-
 button:hover {
     background-color: #283C6C;
 }
 
-
-.tasks li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.task-content {
-    flex-grow: 1;
-}
-
-
-
-
-.task-actions {
-    margin-right: 80px;
-}
-li {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-.status-Готово {
-    background-color: #6A9A2C;
-    }
-
-
-.status-В_процессе {
-    background-color: #D7722A;
-    }
-
-
-.status-К_выполнению {
-    background-color: #14224F;
-   }
-
-.status {
-    margin-left: 40px;
-    margin-right: 40px;
-    padding: 8px;
-
+.edit-button {
+    background-color: #8e9B97;
     color: #fff;
-    font-weight: bold;
-    border-radius: 3px;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    width: auto;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
 }
 
-.username{
-    padding: 20px 0 0;
-    font-weight: bold;
-    font-size: 18px;
+.edit-button:hover {
+    background-color: #626D71;
+}
+.task-actions button {
+    background-color: #980019;
+    color: #FFFFFF;
 
 }
+.task-actions button:hover {
+    background-color: #7A0014;
+    color: #FFFFFF;
+
+}
+
+.username {
+    color: #ecf0f1;
+}
+
+
+.username span {
+    display: inline-block;
+    margin-right: 10px;
+    transition: transform 0.5s ease;
+}
+
+
+.username:hover span {
+    transform: scale(1.1);
+}
+
 select {
   padding: 8px;
   font-size: 14px;
@@ -179,3 +194,47 @@ select {
     padding: 20px 0 0 0;
 }
 
+
+.task-content {
+    background-color: fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.task-description {
+    flex: 2;
+     font-weight: bold;
+}
+
+.task-deadline,
+.task-status,
+.task-actions {
+    flex: 1;
+    text-align: center;
+}
+
+.status-Готово,
+.status-В_процессе,
+.status-К_выполнению {
+    margin: 0 40px;
+    padding: 8px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+.status-Готово {
+    background-color: #6A9A2C;
+}
+
+.status-В_процессе {
+    background-color: #200772;
+}
+
+.status-К_выполнению {
+    background-color: #F9BA32;
+}
