@@ -4,9 +4,10 @@ from flask_migrate import Migrate
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from decouple import config
 
 app = Flask(__name__, template_folder=os.path.abspath('templates'))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'your_database_uri_here'
+app.config['SQLALCHEMY_DATABASE_URI'] = config('DATABASE_URI')
 app.secret_key = 'your_secret_key_here'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
